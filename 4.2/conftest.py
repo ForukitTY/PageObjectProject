@@ -17,9 +17,10 @@ def getting_language(request):
 @pytest.fixture
 def browser():
     options = Options()
-    options.add_experimental_option('prefs', {'intl.accept_languages': getting_language})
-    wb = webdriver.Chrome()
-    wb.implicitly_wait(5)
+    options.add_argument('--ignore-certificate-errors')
+    # options.add_experimental_option('prefs', {'intl.accept_languages': getting_language})
+    wb = webdriver.Chrome(options=options)
+    wb.implicitly_wait(3)
     yield wb
-    time.sleep(30)
+    time.sleep(1)
     wb.quit()
