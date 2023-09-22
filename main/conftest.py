@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 
 
 def pytest_addoption(parser):
-    parser.addoption('--language', help='Do foo', default='ru')
+    parser.addoption('--language', help='language (ru, en-gb)', default='en-gb')
 
 
 @pytest.fixture
@@ -15,10 +15,11 @@ def getting_language(request):
 
 
 @pytest.fixture
-def browser():
+def browser(getting_language):
     options = Options()
     options.add_argument('--ignore-certificate-errors')
-    # options.add_experimental_option('prefs', {'intl.accept_languages': getting_language})
+    options.add_experimental_option('prefs', {'intl.accept_languages': getting_language})
+
     wb = webdriver.Chrome(options=options)
     # wb.implicitly_wait(3)
     yield wb
