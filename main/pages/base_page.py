@@ -3,7 +3,9 @@ import math
 import selenium.webdriver.support.expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
-import locators
+
+from main.pages.locators import BasePageLocators
+
 
 class BasePage:
 
@@ -51,8 +53,8 @@ class BasePage:
             return False
 
     def go_to_login_page(self):
-        link = self.browser.find_element(*locators.BasePageLocators.LOGIN_LINK_INVALID)
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
 
     def should_be_login_link(self):
-        assert self.is_element_present(*locators.BasePageLocators.LOGIN_LINK), "Login link is not presented"
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
