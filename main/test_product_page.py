@@ -1,5 +1,6 @@
 import pytest
 
+from main.pages.basket_page import BasketPage
 from main.pages.locators import ProductPageLocators
 from main.pages.product_page import ProductPage
 
@@ -58,3 +59,15 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page.go_to_login_page()
     login_url = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
     assert page.url == login_url, "Opened page has no login url"
+
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, getting_language):
+    link = f"http://selenium1py.pythonanywhere.com/{getting_language}/catalogue/hacking-exposed-wireless_208/"
+    page = ProductPage(browser, link)
+    page.open()
+    # page.add_to_basket() # negative case
+    page.go_to_basket_page()
+    basket_page = BasketPage(browser, browser.current_url)
+
+    assert len(basket_page.get_basket_items()) == 0, "Wrong items count in basket"
+    basket_page.should_be_empty_basket()
